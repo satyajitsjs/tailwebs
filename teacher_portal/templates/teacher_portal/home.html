@@ -1,0 +1,50 @@
+{% extends 'teacher_portal/base.html' %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+<div class="container">
+    <h1>Student Listing</h1>
+    <table>
+        <tr>
+            <th>Name</th>
+        <th>Subject</th>
+        <th>Marks</th>
+        <th>Actions</th>
+    </tr>
+    {% for student in students %}
+    <tr>
+        <td>{{ student.name }}</td>
+        <td>{{ student.subject }}</td>
+        <td>{{ student.marks }}</td>
+        <td>
+            <button onclick="showStudentModal({{ student.id }}, '{{ student.name }}', '{{ student.subject }}', {{ student.marks }})">Edit</button>
+            <button onclick="deleteStudent({{ student.id }})">Delete</button>
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+</br>
+<button onclick="showStudentModal()">Add Student</button>
+</div>
+
+<script>
+    function deleteStudent(id) {
+        fetch(`/delete_student/${id}/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                location.reload();
+            } else {
+                alert('Failed to delete student');
+            }
+        });
+    }
+</script>
+{% endblock %}

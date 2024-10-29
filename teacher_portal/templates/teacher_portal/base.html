@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>{% block title %}Teacher Portal{% endblock %}</title>
+</head>
+<body>
+<nav>
+    <div class="nav-left">
+        <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo">
+    </div>
+    <div class="nav-right">
+        <ul>
+            <li><a href="{% url 'home' %}">Home</a></li>
+            <li><a href="{% url 'logout' %}">Logout</a></li>
+        </ul>
+    </div>
+</nav>
+{% block content %}
+{% endblock %}
+
+<!-- Modal Structure -->
+<div id="studentModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <form id="studentForm" onsubmit="submitStudentForm(event)">
+            <input type="hidden" id="studentId" name="id">
+            <label for="studentName">Name:</label>
+            <input type="text" id="studentName" name="name" required>
+            <label for="studentSubject">Subject:</label>
+            <input type="text" id="studentSubject" name="subject" required>
+            <label for="studentMarks">Marks:</label>
+            <input type="number" id="studentMarks" name="marks" required>
+            <button type="submit">Save</button>
+        </form>
+    </div>
+</div>
+
+<script>
+    function showStudentModal(id = null, name = '', subject = '', marks = '') {
+        document.getElementById('studentId').value = id;
+        document.getElementById('studentName').value = name;
+        document.getElementById('studentSubject').value = subject;
+        document.getElementById('studentMarks').value = marks;
+        document.getElementById('studentModal').style.display = 'block';
+    }
+
+    function closeModal() {
+        document.getElementById('studentModal').style.display = 'none';
+    }
+
+    function submitStudentForm(event) {
+        event.preventDefault();
+        const id = document.getElementById('studentId').value;
+        const name = document.getElementById('studentName').value;
+        const subject = document.getElementById('studentSubject').value;
+        const marks = document.getElementById('studentMarks').value;
+
+        const url = id ? `/edit_student/${id}/` : '/add_student/';
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': '{{ csrf_token }}'
+            },
+            body: JSON.stringify({ name, subject, marks })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.status === 'success') {
+                location.reload();
+            } else {
+                alert('Failed to save student');
+            }
+        });
+    }
+</script>
+</body>
+</html>

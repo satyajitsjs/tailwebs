@@ -65,13 +65,12 @@ teacher_portal/
     tests.py
     urls.py
     views.py
-```
 
 ## Installation
 
 1. **Clone the repository**:
     ```sh
-    git clone <repository-url>
+    git clone https://github.com/satyajitsjs/tailwebs.git
     cd teacher_portal
     ```
 
@@ -105,19 +104,14 @@ teacher_portal/
 
 7. **Access the application**:
     Open your web browser and go to `
-
-http
-
-://127.0.0.1:8000/`.
+    http://127.0.0.1:8000/`.
 
 ## Usage
-
 - **Login**: Use the login page to authenticate.
 - **Register**: Use the registration page to create a new account.
 - **Home**: After logging in, you will be redirected to the home page where you can manage student records.
 
 ## License
-
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Contributing
@@ -133,19 +127,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - Django Documentation
 - Font Awesome for icons
-```
-
-### Summary
-
-- The 
-
-README.md
-
- file provides an overview of the project, installation instructions, usage details, and contribution guidelines.
-- The 
-
-LICENSE
-
- file contains the MIT License text, which allows others to freely use, modify, and distribute the software.
-
-You can place these files in the root directory of your project.

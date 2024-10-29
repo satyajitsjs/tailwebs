@@ -16,7 +16,9 @@
     <div class="nav-right">
         <ul>
             <li><a href="{% url 'home' %}">Home</a></li>
-            <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% if request.user.is_authenticated %}
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+            {% endif %}
         </ul>
     </div>
 </nav>
